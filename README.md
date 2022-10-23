@@ -22,10 +22,27 @@ Using the menu configuration, which is a two-dimensional array, when the user cl
 
 Also, index 0 of each row consists of menu titles, and the last index consists of number 0 button that moves all to the previous row.
 
+<code>
 String[][] menu = { /<br>
 				{ "EXIT", "Exit the program.~" }, //row 0 </br>
 				{ "MAIN", "To calculate", "Exit" }, //row 1 : Click 0 > previous row </br>
 				{ "CALCULATE", "New calculate", "Then calculate", "Previous screen" } // row 2 </br>
         };
+</code>
 
-2. ...
+2. Flattening the code that receives numbers and operators for calculations
+
+The calculation requires 2 numbers and 1 operator.
+I use a size 4 one-dimensional array (int[] data) to input 2 numbers and 1 operator to the user.
+And the last index of the array stores the result of the calculation.
+
+While receiving the information from the user 3 times, I write all the codes in the order of title - subtitle - userinput .
+Also, when showing the operation result, the result is shown after providing the title - subtitle.
+
+So I was able to pattern a total of 4 cycles of title - subtitle - userinput(or show result).
+
+To make this a little more graphic,
+
+
+
+
