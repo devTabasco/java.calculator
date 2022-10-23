@@ -6,15 +6,17 @@ import back.BackEnd;
 
 public class FrontEnd { 
 
-	public FrontEnd(int recordIdx) {
-		this.controller(recordIdx);
+	public FrontEnd(int rowIndex) {
+		this.controller(rowIndex);
 	}
 
-	private void controller(int recordIndex) {
+	private void controller(int rowIndex) {
 		Scanner scanner = new Scanner(System.in);
 		String title = this.makeTitle();
-		String[][] menu = { { "EXIT", "프로그램을 종료합니다.~" }, { "메인", "연산하기", "끝내기" },
-				{ "연산", "새로운 연산", "이어서 연산", "이전화면" } };
+		String[][] menu = { 
+				{ "EXIT", "Exit the program.~" }, 
+				{ "MAIN", "To calculate", "Exit" },
+				{ "CALCULATE", "New calculate", "Then calculate", "Previous screen" } };
 		String userData = new String();
 		String message = new String();
 		int selectMenu;
@@ -24,7 +26,7 @@ public class FrontEnd {
 			this.display(title);
 			if (message != null)
 				this.display(message);
-			this.display(this.makeSubMenu(menu[recordIndex]));
+			this.display(this.makeSubMenu(menu[rowIndex]));
 			if (!loopCheck)
 				break;
 
@@ -32,21 +34,21 @@ public class FrontEnd {
 
 			if (this.isInteger(userData)) {
 				selectMenu = this.convertToInteger(userData);
-				if (this.isIntegerRange(selectMenu, 0, menu[recordIndex].length - 2)) {
+				if (this.isIntegerRange(selectMenu, 0, menu[rowIndex].length - 2)) {
 					message = null;
-					recordIndex += (selectMenu == 0) ? -1 : 1;
+					rowIndex += (selectMenu == 0) ? -1 : 1;
 
-					if (recordIndex == 0) {
+					if (rowIndex == 0) {
 						loopCheck = false;
-					} else if (recordIndex >= 3) {
-						recordIndex = 2;
-						recordIndex = this.operator(title, menu[recordIndex], scanner);
+					} else if (rowIndex >= 3) {
+						rowIndex = 2;
+						rowIndex = this.operator(title, menu[rowIndex], scanner);
 					}
 				} else {
-					message = "[ 0~" + (menu[recordIndex].length - 2) + " 범위내 숫자를 입력해주세요]\n\n";
+					message = "[ 0~" + (menu[rowIndex].length - 2) + " Please enter a number within the range]\n\n";
 				}
 			} else {
-				message = "[ 숫자로 입력해 주세요 ]\n\n";
+				message = "[ Please enter a number ]\n\n";
 			}
 		}
 		scanner.close();
@@ -55,20 +57,14 @@ public class FrontEnd {
 	private String makeTitle() {
 		StringBuffer title = new StringBuffer();
 		title.append("****************************************************\n\n");
-		title.append("	    JS Framework Calculator  v1.0\n");
-		title.append("		           Designed By HoonZzang\n\n");
+		title.append("	    	Calculator  v1.0\n");
+		title.append("		           Designed By Changyong\n\n");
 		title.append("****************************************************\n\n");
 		return title.toString();
 	}
 
-	private String makeMessage(String text) {
-		StringBuffer message = new StringBuffer();
-		message.append("[ ");
-		message.append(text);
-		message.append(" ]");
-		return message.toString();
-	}
-
+	//To make SubMenu
+	//A method to create a submenu by receiving a 1D array of the selected menu according to the change of rowIndex.
 	private String makeSubMenu(String[] menu) {
 		StringBuffer subMenu = new StringBuffer();
 		subMenu.append("  [ " + menu[0] + " ]");
@@ -93,52 +89,43 @@ public class FrontEnd {
 		return subMenu.toString();
 	}
 
-	/*
-	 * 사용자 입력 전용 메서드 고려사항 : 1. 숫자로 변환이 불가능한 데이터가 입력되어질 경우 해결방안 2. Scanner Class의
-	 * Life Cycle과 Performance
-	 */
+	//using the Scanner
 	private String userInput(Scanner scanner) {
 		return scanner.next();
 	}
 
-	/* 정수 변환여부 체크 */
+	//To check integer conversion
 	private boolean isInteger(String value) {
 		boolean isResult = true;
 		try {
 			Integer.parseInt(value);
 		} catch (Exception e) {
-			isResult = false;// e.printStackTrace();
+			isResult = false;
+			// e.printStackTrace();
 		}
 		return isResult;
 	}
 
-	/* 문자 >> 정수 변환 */
+	//Type Casting String to integer
 	private int convertToInteger(String value) {
 		return Integer.parseInt(value);
 	}
 
-	/* 정수의 범의 체크 */
+	// Check the range of the integer
 	private boolean isIntegerRange(int value, int starting, int last) {
 		return (value >= starting && value <= last) ? true : false;
 	}
 
-	/* 출력 전용 메서드1 */
+	// Print method
 	private void display(String text) {
 		System.out.print(text);
 	}
 
-	/* 출력 전용 메서드2 */
-	private void display(String[] text) {
-		for (int idx = 0; idx < text.length; idx++) {
-			System.out.print((idx + 1) + ". " + text[idx] + "  ");
-		}
-	}
-
-	/* 연산 Controller */
+	// Operator Controller
 	private int operator(String title, String[] menu, Scanner scanner) {
 		BackEnd backend = new BackEnd();
 		int[] data = new int[4];
-		String[] subTitle = { "숫자를 입력해주세요 ", "연산자를 선택해주세요", "숫자를 입력해주세요", "연산결과" };
+		String[] subTitle = { "Please enter a number", "Please select an operator", "Please enter a number", "Calculation result" };
 		String temp = new String(), message = new String();
 		boolean loopCheck = true, isFormula = false, run = true, subMenu = true;
 
@@ -161,7 +148,7 @@ public class FrontEnd {
 
 					if (isFormula) {
 						if (step != 42)
-							this.display(" [수식] ");
+							this.display(" [Expression] ");
 						for (int dataIdx = 0; dataIdx < data.length; dataIdx++) {
 							if (data[dataIdx] != 0) {
 								this.display(
@@ -178,21 +165,21 @@ public class FrontEnd {
 				case 33:
 				case 43:
 					isFormula = true;
-					this.display(step == 23 ? "\n[선택 : 1. 더하기  2. 빼기   3. 곱하기   4. 나누기] : " : "");
+					this.display(step == 23 ? "\n[Select : 1. Plus  2. Minus   3. Product   4. divide] : " : "");
 					if (step != 43) {
 						temp = this.userInput(scanner);
 						if (this.isInteger(temp)) {
 							data[(step / 10) - 1] = this.convertToInteger(temp);
 							if (step == 23) {
 								if (!this.isIntegerRange(data[(step / 10) - 1], 1, 4)) {
-									message = "*** 1 ~ 4 범위내에서 선택하세요 ***\n";
+									message = "Please select from 1 to 4\n";
 									data[(step / 10) - 1] = 0;
 									step -= 1;
 									break;
 								}
 							}
 						} else {
-							message = "*** 정수로 입력하세요 ***\n";
+							message = "Please enter an integer\n";
 							step -= 1;
 							break;
 						}
@@ -241,18 +228,18 @@ public class FrontEnd {
 							run = false;
 						}
 					} else {
-						this.display("\n0~2 까지의 숫자를 입력해주세요\n");
+						this.display("\nPlease enter a number from 0 to 2\n");
 						
 					}
 				} else {
-					this.display("\n*** 정수로 입력하세요 ***\n");
+					this.display("\nPlease enter an integer\n");
 				}
 			}
 		}
 		return 1;
 	}
 
-	/* 선택한 연산 번호를 문자로 변환 후 리턴 */
+	// Converts the selected operation number to a operation character and returns it
 	private String convertToOperator(int operatorNumber) {
 		String operator = new String();
 		switch (operatorNumber) {
@@ -269,16 +256,6 @@ public class FrontEnd {
 			operator = "÷";
 		}
 		return operator;
-	}
-
-	/* 연산에 사용할 subTitle */
-	private String makeSubTitle(String subTitle) {
-		StringBuffer sb = new StringBuffer();
-		sb.append("[ ");
-		sb.append(subTitle);
-		sb.append(" ] ");
-		sb.append(" _____________________________\n");
-		return sb.toString();
 	}
 
 }
