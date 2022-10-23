@@ -23,9 +23,9 @@ Using the menu configuration, which is a two-dimensional array, when the user cl
 Also, index 0 of each row consists of menu titles, and the last index consists of number 0 button that moves all to the previous row.
 
 String[][] menu = { 
-				{ "EXIT", "Exit the program.~" }, //row 0
-				{ "MAIN", "To calculate", "Exit" }, //row 1 : Click 0 > next row
-				{ "CALCULATE", "New calculate", "Then calculate", "Previous screen" } // row 2
+				{ "EXIT", "Exit the program.~" }, //row 0 </br>
+				{ "MAIN", "To calculate", "Exit" }, //row 1 : Click 0 > next row </br>
+				{ "CALCULATE", "New calculate", "Then calculate", "Previous screen" } // row 2 </br>
         };
 
 2. ...
