@@ -2,7 +2,7 @@
 
 This project is a command line calculator, which is my first project while studying Java.
 
-We used the following knowledge:
+I used the following knowledge:
 
 1. Array
 2. Class
@@ -12,7 +12,7 @@ We used the following knowledge:
 6. MVC pattern
 7. Other basic grammar
 
-Among them, this project aimed to learn the concepts of Array and Class (especially, distinguishing the backend from the frontend), so I tried to utilize the concept even if it was inefficient overall.
+Among them, this project aimed to learn the concepts of Array and Class (especially, distinguishing the backend from the frontend), so I tried to utilize these concepts even if it was inefficient overall.
 
 Also, for cleaner code, I've used the following ideas:
 
